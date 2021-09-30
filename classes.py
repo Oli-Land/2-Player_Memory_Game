@@ -69,8 +69,8 @@ class Game:
 
         self.board = Board()
 
-        self.p1_score = 0
-        self.p2_score = 0
+        self.score = 0
+        
 
     def is_game_finished(self):
         """ Checks for the game win condition.
@@ -117,7 +117,7 @@ class Game:
 
     def turn(self):
         
-        system('clear')
+        
         Board.display(self.board)
         # -- Turn 1 --
         current_input_1 = "catch"
@@ -131,6 +131,8 @@ class Game:
         system('clear')
         Board.display(self.board, flipped_cards=[current_input_1])
 
+        # MySocket.send_selection(flipped_cards=[current_input_1])
+
     
         current_input_2 = "catch"
         while Game.is_invalid_input(current_input_2, current_input_1):
@@ -142,17 +144,20 @@ class Game:
         system('clear')
         # second Turn print board shows both selected cards revealed
         Board.display(self.board, flipped_cards=[current_input_1, current_input_2])
+        
+        # MySocket.send_selection(flipped_cards=[current_input_1, current_input_2])
 
         # conditional structure tests for matched pairs and sets their Matched boolean to True
         if self.board.deck[current_input_1]['Value'] == self.board.deck[current_input_2]['Value']:
             self.board.deck[current_input_1]['Matched'] = True
             self.board.deck[current_input_2]['Matched'] = True
             print("Correct match!")
-            self.p1_score += 1
+            self.score += 1
         else:
             print("No match, please try again")
 
         time.sleep(2)
+        system('clear')
 
 
 
