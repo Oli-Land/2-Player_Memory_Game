@@ -4,7 +4,7 @@ import time
 import socket
 import json
 import sys
-
+import socket
 
 
 
@@ -115,7 +115,7 @@ class Game:
             
         return False
 
-    def turn(self):
+    def turn1(self):
         
         
         Board.display(self.board)
@@ -131,9 +131,11 @@ class Game:
         system('clear')
         Board.display(self.board, flipped_cards=[current_input_1])
 
-        # MySocket.send_selection(flipped_cards=[current_input_1])
+        return current_input_1
+        
 
-    
+    def turn2(self, current_input_1):
+
         current_input_2 = "catch"
         while Game.is_invalid_input(current_input_2, current_input_1):
             current_input_2 = input("Enter coordinates of second selection (a-d)(1-4): ")
@@ -145,8 +147,9 @@ class Game:
         # second Turn print board shows both selected cards revealed
         Board.display(self.board, flipped_cards=[current_input_1, current_input_2])
         
-        # MySocket.send_selection(flipped_cards=[current_input_1, current_input_2])
+        return current_input_2
 
+    def match(self, current_input_1, current_input_2):
         # conditional structure tests for matched pairs and sets their Matched boolean to True
         if self.board.deck[current_input_1]['Value'] == self.board.deck[current_input_2]['Value']:
             self.board.deck[current_input_1]['Matched'] = True
@@ -158,20 +161,6 @@ class Game:
 
         time.sleep(2)
         system('clear')
-
-
-
-
-
-
-
-
-
-
-
-
-    
-
 
 
 

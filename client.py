@@ -13,24 +13,26 @@ client_socket.connect(("127.0.0.1", 65432))
 
 game = Game()
 
-while True:
-    
-        
-    json_deck = client_socket.recv(1024)
-    
-    game.board.deck = json.loads(json_deck)
-    print(game.board.deck)
+json_deck = client_socket.recv(1024)
 
-    input("continue")
+game.board.deck = json.loads(json_deck)
 
-""" while not Game.is_game_finished(game):
+print(game.board.deck)
+
+
+while not game.is_game_finished():
+
     print("Player 1 turn")
     p1_selection_1 = client_socket.recv(1024)
     Board.display(game.board, flipped_cards=[p1_selection_1])
     p1_selection_2 = client_socket.recv(1024)
     Board.display(game.board, flipped_cards=[p1_selection_1, p1_selection_2])
+
     print("Player 2 turn")
-    game.turn()
-     """
+    current_input_1 = game.turn1()
+    client_socket.sendall(bytes(current_input_1, "utf-8"))
+    current_input_2 = game.turn2(current_input_1)
+    client_socket.sendall(bytes(current_input_2, "utf-8"))
+    game.match(current_input_1, current_input_2)
     
 

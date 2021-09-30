@@ -22,28 +22,34 @@ print("Listening for incoming connection on port 65432")
 connection, address = server_socket.accept()
 print(f"Connected by {address}")
 
-print(connection)
+
+
+
 
 game = Game()
 
-while True:
-    
+json_deck = json.dumps(game.board.deck)
 
-    json_deck = json.dumps(game.board.deck)
-    
-    # convert message to bytes, send
-    connection.sendall(bytes(json_deck, "utf-8"))
+# convert message to bytes, send
+connection.sendall(bytes(json_deck, "utf-8"))
 
 
-""" while not Game.is_game_finished(game):
+while not game.is_game_finished():
+
     print("Player 1 turn")
-    game.turn()
+    current_input_1 = game.turn1()
+    connection.sendall(bytes(current_input_1, "utf-8"))
+    current_input_2 = game.turn2(current_input_1)
+    connection.sendall(bytes(current_input_2, "utf-8"))
+    game.match(current_input_1, current_input_2)
+
     print("Player 2 turn")
     p2_selection_1 = connection.recv(1024)
     Board.display(game.board, flipped_cards=[p2_selection_1])
     p2_selection_2 = connection.recv(1024)
     Board.display(game.board, flipped_cards=[p2_selection_1, p2_selection_2])
- """
+
+ 
 # print(f"Game over, {} wins! Final score is {}{}")
 
 
