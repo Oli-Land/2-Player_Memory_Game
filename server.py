@@ -44,9 +44,12 @@ while not game.is_game_finished():
     game.match(current_input_1, current_input_2)
 
     print("Player 2 turn")
-    p2_selection_1 = connection.recv(1024)
+    p2_selection_1_raw = connection.recv(1024)
+    p2_selection_1 = (str(p2_selection_1_raw).strip("b'"))
     Board.display(game.board, flipped_cards=[p2_selection_1])
-    p2_selection_2 = connection.recv(1024)
+
+    p2_selection_2_raw = connection.recv(1024)
+    p2_selection_2 = (str(p2_selection_2_raw).strip("b'"))
     Board.display(game.board, flipped_cards=[p2_selection_1, p2_selection_2])
 
  

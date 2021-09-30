@@ -17,15 +17,19 @@ json_deck = client_socket.recv(1024)
 
 game.board.deck = json.loads(json_deck)
 
-print(game.board.deck)
+
 
 
 while not game.is_game_finished():
 
     print("Player 1 turn")
-    p1_selection_1 = client_socket.recv(1024)
+
+    p1_selection_1_raw = client_socket.recv(1024)  
+    p1_selection_1 = (str(p1_selection_1_raw).strip("b'"))
     Board.display(game.board, flipped_cards=[p1_selection_1])
-    p1_selection_2 = client_socket.recv(1024)
+
+    p1_selection_2_raw = client_socket.recv(1024)
+    p1_selection_2 = (str(p1_selection_2_raw).strip("b'"))
     Board.display(game.board, flipped_cards=[p1_selection_1, p1_selection_2])
 
     print("Player 2 turn")
