@@ -2,7 +2,6 @@ import random
 from os import system
 import time
 import socket
-import json
 import sys
 import socket
 
