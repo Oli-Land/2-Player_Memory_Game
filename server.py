@@ -45,11 +45,11 @@ while not game.is_game_finished():
 
     print("Player 2 turn")
     p2_selection_1_raw = connection.recv(1024)
-    p2_selection_1 = (str(p2_selection_1_raw).strip("b'"))
+    p2_selection_1 = p2_selection_1_raw.decode()
     Board.display(game.board, flipped_cards=[p2_selection_1])
 
     p2_selection_2_raw = connection.recv(1024)
-    p2_selection_2 = (str(p2_selection_2_raw).strip("b'"))
+    p2_selection_2 = p2_selection_2_raw.decode()
     Board.display(game.board, flipped_cards=[p2_selection_1, p2_selection_2])
 
  
