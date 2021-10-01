@@ -69,7 +69,8 @@ class Game:
 
         self.board = Board()
 
-        self.score = 0
+        self.p1_score = 0
+        self.p2_score = 0
         
 
     def is_game_finished(self):
@@ -149,15 +150,25 @@ class Game:
         
         return current_input_2
 
-    def match(self, current_input_1, current_input_2):
+    def match(self, current_player, current_input_1, current_input_2):
         # conditional structure tests for matched pairs and sets their Matched boolean to True
         if self.board.deck[current_input_1]['Value'] == self.board.deck[current_input_2]['Value']:
             self.board.deck[current_input_1]['Matched'] = True
             self.board.deck[current_input_2]['Matched'] = True
             print("Correct match!")
-            self.score += 1
+            if current_player == 'p1':
+                self.p1_score += 1
+            elif current_player == 'p2':
+                self.p2_score += 1
+            if self.p1_score > self.p2_score:
+                print(f"Player 1 is in the lead with {self.p1_score} points!")
+            elif self.p2_score > self.p1_score:
+                print(f"Player 2 is in the lead with {self.p2_score} points!")
+            elif self.p1_score == self.p2_score:
+                print(f"Score is tied at {self.p1_score} points!")
+        
         else:
-            print("No match, please try again")
+            print("No match...")
 
         time.sleep(2)
         system('clear')
@@ -165,7 +176,7 @@ class Game:
 
 
 
-class ServerSocket:
+class MySocket:
     def __init__(self, ip = "127.0.0.1" , port = 65432):
 
         sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
