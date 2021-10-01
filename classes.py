@@ -50,18 +50,6 @@ class Board:
             print("  -----------------")
 
 
-    def is_game_finished(self):
-        """ Checks for the game win condition.
-        
-        Returns: True when all cards have Matched == True
-        """
-
-        for letter in ['a', 'b', 'c', 'd']:
-            for number in ['1', '2', '3', '4']:
-                if self.deck[letter + number]['Matched'] == False:
-                    return False
-        return True
-
 
 class Game:
 
@@ -172,6 +160,24 @@ class Game:
 
         time.sleep(2)
         system('clear')
+
+    def display_score(self):
+        print(f"Player 1 Score: {self.p1_score} points")
+        print(f"Player 2 Score: {self.p2_score} points")
+
+    def game_over(self):
+        print("Game Over!")
+        print(f"Final score for Player 1: {self.p1_score} points")
+        print(f"Final score for Player 2: {self.p2_score} points")
+        if self.p1_score > self.p2_score:
+            print(f"Player 1 wins!")
+        elif self.p2_score > self.p1_score:
+            print(f"Player 2 wins!")
+        elif self.p1_score == self.p2_score:
+            print(f"It's a draw!")
+
+
+
 
 
 
