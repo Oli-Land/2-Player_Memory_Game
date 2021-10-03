@@ -6,13 +6,13 @@ version of the game to be played on 2 computers over a network.
     
 
 The Solution Must:
-## describe how input and output will be handled
+## Describe how input and output will be handled
  - Input is typed directly into the terminals of both players. 
  - Output is printed to the terminals of both players.
  - Game board is converted to JSON and sent from server to client over network at the start of each game
  - Each players' moves are sent over the network to be viewed by the other player simultaneously
 
-## detail how the solution will be structured in terms of classes, functions and other entities
+## Detail how the solution will be structured in terms of classes, functions and other entities
 Files:
   - classes.py
     - Classes and class methods for game function.
@@ -85,4 +85,4 @@ as packets of up to 1024 utf-8 encoded bytes using sendall(), then received and 
 
 # Develop a flowchart for an application that outlines the control flow of the app, and illustrates the operation of an algorithm based on the solution you have described.
 
-![flow](./network_memory.png)
+![flow](./network_memory_flowchart.png)
