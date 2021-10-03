@@ -33,6 +33,7 @@ class Board:
         
         Inputs: 2 digit board coordinate eg b3
         """
+        print("")
         print(f"Selected: {flipped_cards}")
         print("    1   2   3   4")
         print("  -----------------")
@@ -47,6 +48,7 @@ class Board:
                     print(" " + " | ", end="")
             print("")
             print("  -----------------")
+        print("")
 
 
 
@@ -161,10 +163,12 @@ class Game:
         system('clear')
 
     def display_score(self):
-        print(f"Player 1 Score: {self.p1_score} points")
-        print(f"Player 2 Score: {self.p2_score} points")
+
+        print(f"\nPlayer 1 Score: {self.p1_score} points")
+        print(f"Player 2 Score: {self.p2_score} points\n")
 
     def game_over(self):
+
         print("Game Over!")
         print(f"Final score for Player 1: {self.p1_score} points")
         print(f"Final score for Player 2: {self.p2_score} points")
@@ -181,17 +185,57 @@ class Game:
 
 
 
-class MySocket:
-    def __init__(self, ip = "127.0.0.1" , port = 65432):
+class MyServer():
+    """ # instantiate socket class object with two arguments
+    server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
-        sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    # associate socket with ip and port
+    server_socket.bind(("127.0.0.1", 65432))
 
-        sock.bind((ip, port))
+    # tell the socket what to do is listen
+    server_socket.listen()
+    print("Listening for incoming connection on port 65432")
 
-        sock.listen()
+    # when a connection comes through,
+    # output a representation of connection and the address it has come from
+    connection, address = server_socket.accept()
+    print(f"Connected by {address}") 
+    """
 
-    def accept():
-        """ accept() -> (socket object, address info)
 
-        Wait for an incoming connection. Return a new socket representing the connection, and the address of the client. For IP sockets, the address info is a pair (hostaddr, port). """
-        socket.socket.accept()
+    def __init__(self):
+
+        self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+
+        hostname = socket.gethostname()
+        ip = socket.gethostbyname(hostname)
+
+        port = 65444
+
+        self.sock.bind((ip, port))
+
+        self.sock.listen()
+        print(f"Server IP is: {ip}")
+        print(f"Listening for incoming connection on port {port}")
+
+        self.connection, self.address = self.sock.accept()
+        print(f"Connected by {self.address}")
+
+
+class MyClient:
+
+    def __init__(self):
+
+        ip = input("Input server IP: ")
+        port = 65444
+
+        self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        self.sock.connect((ip, port))
+        print(f"Connected to {ip}, {port}")
+
+
+
+
+
+        
+
