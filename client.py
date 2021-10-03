@@ -1,8 +1,8 @@
 import socket
 from os import system
 import json
-from classes import Board, MyClient
-from classes import Game
+from classes import Board, MyClient, Game
+
 
 
 
@@ -11,15 +11,15 @@ client = MyClient()
 play = True
 while play:
 
-    # Instantiate new game
-    # Receive card deck from server as JSON
-    # Overwrite local game deck
-    # (Both players track their own identical instance of the game)    
+    # Instantiate new game.
+    # Receive card deck from server as JSON.
+    # Overwrite local game deck.
+    # (Both players track their own identical instance of the game).    
     game = Game()
     json_deck = client.sock.recv(1024)
     game.board.deck = json.loads(json_deck)
 
-    # Main turn loop cycles until win condition is met
+    # Main turn loop cycles until win condition is met.
     while not game.is_game_finished():
 
         # ----------------------Player 1 Turn---------------------- #
@@ -29,11 +29,11 @@ while play:
         Board.display(game.board)
         print("Player 1 turn...")
 
-        # Receive player 1's moves over network.
+        # Receive and decode player 1's moves over network.
         p1_selection_1_raw = client.sock.recv(1024)  
         p1_selection_1 = p1_selection_1_raw.decode()
         
-        # Display local board instance with player 1's moves 
+        # Display local board instance with player 1's moves. 
         system('clear')
         Board.display(game.board, flipped_cards=[p1_selection_1])
         print("Player 1 turn...")
@@ -43,17 +43,17 @@ while play:
         system('clear')
         Board.display(game.board, flipped_cards=[p1_selection_1, p1_selection_2])
         
-        # Check for match and attribute any point to player 2
+        # Check for match and attribute any point to player 1.
         game.match('p1', p1_selection_1, p1_selection_2)
 
         # ----------------------Player 2 Turn---------------------- #
-        # Take turn while player 1 waits.
 
         game.display_score()
         print("Player 2 turn...")
 
-        # Send moves over network to also be displayed for player 2
+        # Take turn while player 1 waits.
         current_input_1 = game.turn1()
+        # Send moves over network to also be displayed for player 2.
         client.sock.sendall(bytes(current_input_1, "utf-8"))
 
         current_input_2 = game.turn2(current_input_1)

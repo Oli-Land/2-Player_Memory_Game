@@ -1,5 +1,4 @@
 """ This module contains the classes which 2Oli2Land server.py and client.py depend upon.
-
     Classes:
     Board
     Game
@@ -16,25 +15,20 @@ import sys
 
 class Board:
     """ Contains methods for generating and displaying the game board.
-
     Methods:
         __init__(): Inits the board's deck
         display(self, flipped_cards=[]): Displays the game board
-
     Attributes:
             deck: A dictionary of cards named after board coordinates.
                 Each card is a nested dictionary containing its symbol value
                 and its matched status boolean.
-
     """
 
     def __init__(self):
         """ Inits a Board class object with a deck attribute.
-
         Shuffles the library of symbols and
         iterates over all board coordinates, creating dictionaries
         for each card and pops a symbol to each.
-
         """
 
         self.deck = {}
@@ -50,12 +44,10 @@ class Board:
 
     def display(self, flipped_cards=[]):
         """ Prints a 4x4 grid containing cards from the board deck.
-
         Each 'card' shows up blank by default.
         Prints a card's symbol value when the function is handed
         a card's key as an argument, or when the card's 
         Matched boolean is True.
-
         Args:
             flipped_cards: A list containing one or two strings of
                 2-digit board coordinates provided from player input eg [b3, c4]
@@ -80,12 +72,10 @@ class Board:
 
 class Game:
     """ Contains methods for gameplay.
-
     Attributes:
         board: See Board class
         p1_score: An integer storing player 1 score
         p2_score: An integer storing player 2 score
-
     Methods:
         __init__: Inits the game
         is_game_finished(self): Checks for game win condition
@@ -97,7 +87,6 @@ class Game:
             Checks if turn1 and turn2 selections match
         display_score(self): Prints player scores
         game_over(self): Prints end of game message and player scores
-
     """
 
 
@@ -105,7 +94,6 @@ class Game:
         """ Inits the game by creating an instance of the Board class.
         
         Sets scores of players to 0 and prints the game rules
-
         """
 
         self.board = Board()
@@ -114,26 +102,21 @@ class Game:
 
         print("""\n       
         Welcome to 2Oli2Land!
-
         This is a 2 player game of memory
         Test your short term memory against a friend or foe
         Server is player 1, Client is player 2
-
         Choose a card on the board to view its symbol
         Input board coordinates for card choice as (row)(column) eg. b3
         Take turns trying to match pairs of cards
         Each pair matched awards 1 point
         Have fun!
         (Type "exit" to exit game)
-
         """)
         
 
     def is_game_finished(self):
         """ Checks the game's card deck for the win condition.
-
         Returns: True when all cards' Matched booleans are True
-
         """
         for letter in ['a', 'b', 'c', 'd']:
             for number in ['1', '2', '3', '4']:
@@ -144,12 +127,10 @@ class Game:
 
     def is_invalid_input(self, input, previous_input = ""):
         """ Checks input for each turn is valid.
-
         Args:
             input: User input string handed from turn1() and turn2() methods.
             previous_input: Input from turn1(). Compared to input from
                 turn2() for prevention of wasting turn 2.
-
         Returns: False on valid input to break turn's input loop
         """
 
@@ -190,7 +171,6 @@ class Game:
         
         Takes user input as a string and calls Board.display() 
         with the selected card revealed.
-
         Returns: User input selection as string to be handed to turn2(),
             match() to check for matching selection,
             and also sent across the network to show the other player
@@ -216,7 +196,6 @@ class Game:
         
         Takes user input as a string and calls Board.display() 
         with both selected cards revealed.
-
         Returns: User input selection as string to be handed to
             match() to check for matching selection,
             and also sent across the network to show the other player
@@ -238,18 +217,15 @@ class Game:
 
     def match(self, current_player, current_input_1, current_input_2):
         """ Tests for matched pairs and sets their Matched boolean to True.
-
         Takes input from turn1() and turn2() and tests equality.
         Upon correct match, accesses the game board's deck and
         changes both cards' Matched boolean to True and
         increments score of current player by 1. Pauses the game for 2 seconds
         to allow both players a limited time viewing revealed cards.
-
         Args:
             current_player: String tracking current player for scoring purposes.
             current_input_1: User input string from turn1().
             current_input_2: User input string from turn2().
-
         """
 
         if self.board.deck[current_input_1]['Value'] == self.board.deck[current_input_2]['Value']:
@@ -298,17 +274,14 @@ class Game:
 
 class MyServer:
     """ Sets up the server socket for networked play.
-
     Instantiates the server's socket object using the python standard socket library
     with AddressFamily AF_INET and SocketKind SOCK_STREAM.
     Finds the host IP and associates the socket with the IP and
     the arbitrary port 65444. Tells the socket to listen and
     accept incoming connection from the client.
-
     Attributes:
         connection: A socket configured to send data to the client.
         address: Tuple representing client address (IP, port)
-
     """
 
 
@@ -333,14 +306,12 @@ class MyServer:
 
 class MyClient:
     """ Sets up the client socket for network play.
-
     Instantiates the client socket object using the python standard socket library
     with AddressFamily AF_INET and SocketKind SOCK_STREAM. Accepts user input for
     server IP address (displayed on server's screen when program loads) and sets port to 65444.
     
     Attributes:
         sock: A socket configured to send data to the server
-
     """
 
     def __init__(self):
@@ -351,10 +322,4 @@ class MyClient:
         self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.sock.connect((ip, port))
         print(f"Connected to {ip}, {port}")
-
-
-
-
-
-        
 
